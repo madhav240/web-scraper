@@ -7,7 +7,7 @@ import * as cheerio from "cheerio";
 import { ObjectId } from "mongodb";
 import puppeteerCore from "puppeteer-core";
 import puppeteer from "puppeteer";
-import chromium from "@sparticuz/chromium";
+import chromium from "@sparticuz/chromium-min";
 
 async function getBrowser() {
   if (process.env.VERCEL_ENV === "production") {
@@ -51,6 +51,7 @@ export async function scrapeData(url: string) {
     const email = $('a[href^="mailto:"]').text();
 
     const browser = await getBrowser();
+
     const page = await browser.newPage();
     await page.goto(url);
     await page.setViewport({
