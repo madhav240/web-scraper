@@ -249,7 +249,7 @@ export default function Home() {
 
   return (
     <div className="m-1 rounded-sm bg-white">
-      <div className="flex gap-x-10 items-center px-4 pt-7 pb-3">
+      <div className="flex flex-col sm:flex-row gap-y-2 gap-x-10 sm:items-center px-4 pt-7 pb-3">
         <span className="text-neutral-700">{selectedRows.length} selected</span>
         <div className="flex gap-x-4">
           <button
@@ -314,7 +314,10 @@ export default function Home() {
         clearSelectedRows={toggledClearRows}
         customStyles={customStyles}
       />
-      <div className="bg-white py-5 flex pl-3 gap-2 border-t items-center">
+      <div
+        className="bg-white py-5 flex flex-col sm:flex-row pl-3 gap-2 border-t items-center"
+        style={{ visibility: totalRows === 0 ? "hidden" : "initial" }}
+      >
         <p className="text-neutral-700">
           Showing &nbsp;
           <b>
@@ -331,41 +334,46 @@ export default function Home() {
           >
             <ChevronLeft className="text-neutral-500 " />
           </button>
+          <button
+            disabled={1 === page}
+            className={`border-r-2 px-2 text-neutral-500 ${
+              1 === page && "bg-purple-100 text-purple-700"
+            }`}
+            onClick={() => setPage(1)}
+          >
+            1
+          </button>
           {totalPages - page < 5 ? (
             <>
-              <button
-                disabled={1 === page}
-                className={`border-r-2 px-2 text-neutral-500 ${
-                  1 === page && "bg-purple-100 text-purple-700"
-                }`}
-                onClick={() => setPage(1)}
-              >
-                1
-              </button>
-              {range(page, totalPages).map((v) => (
+              {page - 1 !== 1 && (
                 <button
-                  key={v}
-                  disabled={v === page}
-                  className={`border-r-2 px-2 text-neutral-500 ${
-                    v === page && "bg-purple-100 text-purple-700"
-                  }`}
-                  onClick={() => setPage(v)}
+                  className="border-r-2 px-2 text-neutral-500"
+                  onClick={() => setPage(page - 1)}
                 >
-                  {v}
+                  {page - 1}
                 </button>
-              ))}
+              )}
+
+              {page !== totalPages && (
+                <button
+                  disabled={true}
+                  className="border-r-2 px-2  bg-purple-100 text-purple-700"
+                >
+                  {page}
+                </button>
+              )}
+
+              {page + 1 < totalPages && (
+                <button
+                  className="border-r-2 px-2 text-neutral-500"
+                  onClick={() => setPage(page + 1)}
+                >
+                  {page + 1}
+                </button>
+              )}
             </>
           ) : (
             <>
-              <button
-                disabled={1 === page}
-                className={`border-r-2 px-2 text-neutral-500 ${
-                  1 === page && "bg-purple-100 text-purple-700"
-                }`}
-                onClick={() => setPage(1)}
-              >
-                1
-              </button>
               {range(page + 1, page + 2).map((v) => (
                 <button
                   key={v}
@@ -385,15 +393,17 @@ export default function Home() {
               >
                 ...
               </button>
-              <button
-                disabled={page === totalPages}
-                className="border-r-2 px-2 text-neutral-500"
-                onClick={() => setPage(totalPages)}
-              >
-                {totalPages}
-              </button>
             </>
           )}
+          <button
+            disabled={page === totalPages}
+            className={`border-r-2 px-2 text-neutral-500 ${
+              page === totalPages && "bg-purple-100 text-purple-700"
+            }`}
+            onClick={() => setPage(totalPages)}
+          >
+            {totalPages}
+          </button>
           <button
             disabled={!(totalPages > page)}
             onClick={() => setPage((page) => page + 1)}
