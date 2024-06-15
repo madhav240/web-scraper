@@ -125,6 +125,7 @@ const columns: TableColumn<SiteData>[] = [
   {
     name: "DESCRIPTION",
     selector: (row) => row.description,
+    maxWidth: "900px",
   },
   {
     name: "ADDRESS",
@@ -173,7 +174,7 @@ export default function Home() {
   const [totalRows, setTotalRows] = useState(0);
   const [page, setPage] = useState(1);
   const limit = 10;
-  const totalPages = Math.floor(totalRows / limit);
+  const totalPages = Math.ceil(totalRows / limit);
 
   function convertArrayOfObjectsToCSV(array: []) {
     let result: string;
@@ -322,7 +323,7 @@ export default function Home() {
           <b>
             {page}-{limit}
           </b>
-          &nbsp; of <b>{totalPages + 1}</b>
+          &nbsp; of <b>{totalPages}</b>
         </p>
 
         <div className="flex border-2 rounded-md">

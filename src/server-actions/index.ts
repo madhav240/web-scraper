@@ -15,7 +15,12 @@ export async function scrapeData(url: string) {
 
     const company = $("title").text();
     const description = $('meta[name="description"]').attr("content");
-    const image = $('link[rel="icon"]').attr("href");
+    let image = $('link[rel="icon"]').attr("href");
+
+    if (!image?.startsWith("https:/")) {
+      image = "https://" + website + "/" + image;
+    }
+
     const facebook = $('a[href*="facebook.com"]').attr("href");
     const linkedin = $('a[href*="linkedin.com"]').attr("href");
     const twitter = $('a[href*="twitter.com"]').attr("href");

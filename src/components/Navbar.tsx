@@ -16,7 +16,7 @@ export default function Navbar() {
 
       if (data) {
         sessionStorage.setItem("details", JSON.stringify(data));
-        router.push("/details");
+        window.location.href = "/details";
       }
     } catch (error) {
     } finally {

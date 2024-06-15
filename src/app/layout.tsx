@@ -37,9 +37,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <title>Web Scraper</title>
-      <body className={helvetica.className + " bg-neutral-200 w-full h-dvh"}>
+      <body className={helvetica.className + " bg-neutral-200 w-full"}>
         <Navbar />
-        <div className="mt-20 absolute w-full">{children}</div>
+        <div className="mt-32 sm:mt-20 absolute w-full">{children}</div>
       </body>
     </html>
   );

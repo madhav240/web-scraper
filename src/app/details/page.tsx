@@ -19,7 +19,6 @@ import { useEffect, useState } from "react";
 export default function DetailsPage() {
   const [data, setData] = useState<SiteData>();
   useEffect(() => {
-    console.log(sessionStorage.getItem("details"));
     setData(JSON.parse(sessionStorage.getItem("details") as string));
   }, []);
   if (data) {
@@ -50,13 +49,7 @@ export default function DetailsPage() {
                   <Info className="h-6 w-6" />
                   Description
                 </span>
-                <p>
-                  {data.description} Lorem ipsum dolor sit amet consectetur
-                  adipisicing elit. Hic reprehenderit alias sequi voluptatibus
-                  exercitationem aspernatur consequatur minus neque asperiores?
-                  Sequi rerum modi iste inventore quidem ab eius molestiae nisi
-                  veniam?
-                </p>
+                <p>{data.description}</p>
               </div>
               <div className="space-y-4">
                 <div>
