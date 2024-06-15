@@ -63,9 +63,6 @@ export async function scrapeData(url: string) {
 
     try {
       const browser = await getBrowser();
-
-      throw new Error("dsad");
-
       const page = await browser.newPage();
       await page.goto(url);
       await page.setViewport({
