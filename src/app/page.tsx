@@ -239,6 +239,7 @@ export default function Home() {
       await deleteDBSitesData(selectedRows.map((row) => row._id));
       setToggleClearRows(!toggledClearRows);
       setData(differenceBy(data, selectedRows, "_id"));
+      setTotalRows((v) => v - selectedRows.length);
       setSelectedRows([]);
     }
   }
