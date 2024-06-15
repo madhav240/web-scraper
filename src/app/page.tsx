@@ -323,7 +323,7 @@ export default function Home() {
           <b>
             {page}-{limit}
           </b>
-          &nbsp; of <b>{totalPages}</b>
+          &nbsp; of <b>{totalRows}</b>
         </p>
 
         <div className="flex border-2 rounded-md">
