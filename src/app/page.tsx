@@ -346,7 +346,7 @@ export default function Home() {
           </button>
           {totalPages - page < 5 ? (
             <>
-              {page - 1 !== 1 && (
+              {page - 1 > 1 && (
                 <button
                   className="border-r-2 px-2 text-neutral-500"
                   onClick={() => setPage(page - 1)}
@@ -355,7 +355,7 @@ export default function Home() {
                 </button>
               )}
 
-              {page !== totalPages && (
+              {page !== totalPages && page !== 1 && (
                 <button
                   disabled={true}
                   className="border-r-2 px-2  bg-purple-100 text-purple-700"
