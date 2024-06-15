@@ -1,10 +1,30 @@
+// @ts-nocheck
 "use server";
 
 import db from "@/db";
 import axios from "axios";
 import * as cheerio from "cheerio";
 import { ObjectId } from "mongodb";
+import puppeteerCore from "puppeteer-core";
 import puppeteer from "puppeteer";
+import chromium from "@sparticuz/chromium";
+
+async function getBrowser() {
+  if (process.env.VERCEL_ENV === "production") {
+    const browser = await puppeteerCore.launch({
+      args: chromium.args,
+      defaultViewport: chromium.defaultViewport,
+      executablePath: await chromium.executablePath(
+        "https://github.com/Sparticuz/chromium/releases/download/v110.0.1/chromium-v110.0.1-pack.tar"
+      ),
+      headless: chromium.headless,
+    });
+    return browser;
+  } else {
+    const browser = await puppeteer.launch();
+    return browser;
+  }
+}
 
 export async function scrapeData(url: string) {
   try {
@@ -30,9 +50,14 @@ export async function scrapeData(url: string) {
     const phone = $('a[href^="tel:"]').text();
     const email = $('a[href^="mailto:"]').text();
 
-    const browser = await puppeteer.launch();
+    const browser = await getBrowser();
     const page = await browser.newPage();
     await page.goto(url);
+    await page.setViewport({
+      width: 1000,
+      height: 600,
+      devicePixelRatio: 1,
+    });
     const screenshot = await page.screenshot({
       encoding: "base64",
       fullPage: true,
