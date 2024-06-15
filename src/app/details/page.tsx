@@ -1,4 +1,5 @@
 "use client";
+import { getScreenshotData } from "@/server-actions";
 import { SiteData } from "@/types";
 import {
   Camera,
@@ -19,7 +20,16 @@ import { useEffect, useState } from "react";
 export default function DetailsPage() {
   const [data, setData] = useState<SiteData>();
   useEffect(() => {
-    setData(JSON.parse(sessionStorage.getItem("details") as string));
+    const data = JSON.parse(sessionStorage.getItem("details") as string);
+
+    if (data.screenshot) {
+      setData(data);
+    } else {
+      (async () => {
+        const screenshotData = await getScreenshotData(data._id);
+        setData({ ...data, screenshot: screenshotData?.screenshot });
+      })();
+    }
   }, []);
   if (data) {
     return (

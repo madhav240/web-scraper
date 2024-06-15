@@ -63,12 +63,20 @@ export async function getDBSitesData(skip: number, limit: number) {
   const data = await db
     .collection("web-scraper")
     .find()
+    .project({ screenshot: 0 })
     .skip(skip)
     .limit(limit)
     .sort({ $natural: -1 })
     .toArray();
   const total = await db.collection("web-scraper").countDocuments({});
   return { data, total };
+}
+
+export async function getScreenshotData(id: string) {
+  const data = await db
+    .collection("web-scraper")
+    .findOne({ _id: new ObjectId(id) }, { projection: { screenshot: 1 } });
+  return data;
 }
 
 export async function deleteDBSitesData(ids: string[]) {

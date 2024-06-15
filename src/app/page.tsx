@@ -13,17 +13,17 @@ import { range } from "@/lib/utils";
 
 function CompanyCell({ row }: { row: SiteData }) {
   const router = useRouter();
+
+  async function handleClick() {
+    sessionStorage.setItem("details", JSON.stringify(row));
+    router.push("/details");
+  }
+
   return (
     <>
       <div className="flex items-center gap-x-2">
         <img src={row.image} alt=" " className="h-6 w-6" />
-        <button
-          onClick={() => {
-            router.push("/details");
-            sessionStorage.setItem("details", JSON.stringify(row));
-          }}
-          className="text-[#6C2BD9] line-clamp-1"
-        >
+        <button onClick={handleClick} className="text-[#6C2BD9] line-clamp-1">
           {row.company}
         </button>
       </div>
@@ -226,6 +226,7 @@ export default function Home() {
       limit
     );
     setData(_data as []);
+    console.log(_data);
     setTotalRows(total);
     setLoading(false);
   }

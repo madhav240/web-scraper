@@ -7,7 +7,6 @@ import { useRef, useState } from "react";
 export default function Navbar() {
   const [isLoading, setIsLoading] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
-  const router = useRouter();
   async function handleSubmit() {
     try {
       setIsLoading(true);
