@@ -50,21 +50,6 @@ export async function scrapeData(url: string) {
     const phone = $('a[href^="tel:"]').text();
     const email = $('a[href^="mailto:"]').text();
 
-    const browser = await getBrowser();
-
-    const page = await browser.newPage();
-    await page.goto(url);
-    await page.setViewport({
-      width: 1000,
-      height: 600,
-      devicePixelRatio: 1,
-    });
-    const screenshot = await page.screenshot({
-      encoding: "base64",
-      fullPage: true,
-    });
-    await browser.close();
-
     const data = {
       company,
       image,
@@ -74,8 +59,29 @@ export async function scrapeData(url: string) {
       email,
       website,
       socials: { facebook, linkedin, twitter, instagram },
-      screenshot: `data:image/png;base64,${screenshot}`,
     };
+
+    try {
+      const browser = await getBrowser();
+
+      throw new Error("dsad");
+
+      const page = await browser.newPage();
+      await page.goto(url);
+      await page.setViewport({
+        width: 1000,
+        height: 600,
+        devicePixelRatio: 1,
+      });
+      const screenshot = await page.screenshot({
+        encoding: "base64",
+        fullPage: true,
+      });
+      await browser.close();
+      data.screenshot = `data:image/png;base64,${screenshot}`;
+    } catch (error) {
+      console.log(error);
+    }
 
     const { insertedId } = await db.collection("web-scraper").insertOne(data);
 

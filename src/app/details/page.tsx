@@ -54,7 +54,7 @@ export default function DetailsPage() {
               {data.company}
             </h1>
             <div className="flex flex-col lg:flex-row gap-8 mt-4">
-              <div className="lg:w-[33rem] lg:border-r">
+              <div className="lg:w-[34rem] pr-5 lg:border-r">
                 <span className="text-[#64748B] flex gap-x-1 items-center">
                   <Info className="h-6 w-6" />
                   Description
