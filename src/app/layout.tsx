@@ -1,8 +1,28 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
+import Navbar from "@/components/Navbar";
 
-const inter = Inter({ subsets: ["latin"] });
+const helvetica = localFont({
+  src: [
+    {
+      path: "./fonts/helvetica/Helvetica.ttf",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "./fonts/helvetica/helvetica-light-587ebe5a59211.ttf",
+      weight: "300",
+      style: "normal",
+    },
+    {
+      path: "./fonts/helvetica/Helvetica-Bold.ttf",
+      weight: "700",
+      style: "normal",
+    },
+  ],
+  variable: "--font-helvetica",
+});
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -16,7 +36,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <title>Web Scraper</title>
+      <body className={helvetica.className + " bg-neutral-200 w-full h-dvh"}>
+        <Navbar />
+        <div className="mt-20 absolute w-full">{children}</div>
+      </body>
     </html>
   );
 }
