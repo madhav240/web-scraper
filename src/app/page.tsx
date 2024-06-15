@@ -226,7 +226,6 @@ export default function Home() {
       limit
     );
     setData(_data as []);
-    console.log(_data);
     setTotalRows(total);
     setLoading(false);
   }
