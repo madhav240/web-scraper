@@ -314,10 +314,7 @@ export default function Home() {
         clearSelectedRows={toggledClearRows}
         customStyles={customStyles}
       />
-      <div
-        className="bg-white py-5 flex pl-3 gap-2 border-t items-center"
-        style={{ visibility: data.length > 0 ? "initial" : "hidden" }}
-      >
+      <div className="bg-white py-5 flex pl-3 gap-2 border-t items-center">
         <p className="text-neutral-700">
           Showing &nbsp;
           <b>
@@ -336,11 +333,22 @@ export default function Home() {
           </button>
           {totalPages - page < 5 ? (
             <>
-              {range(page + 1, totalPages).map((v) => (
+              <button
+                disabled={1 === page}
+                className={`border-r-2 px-2 text-neutral-500 ${
+                  1 === page && "bg-purple-100 text-purple-700"
+                }`}
+                onClick={() => setPage(1)}
+              >
+                1
+              </button>
+              {range(page, totalPages).map((v) => (
                 <button
                   key={v}
                   disabled={v === page}
-                  className="border-r-2 px-2 text-neutral-500"
+                  className={`border-r-2 px-2 text-neutral-500 ${
+                    v === page && "bg-purple-100 text-purple-700"
+                  }`}
                   onClick={() => setPage(v)}
                 >
                   {v}
@@ -349,11 +357,22 @@ export default function Home() {
             </>
           ) : (
             <>
-              {range(page, page + 2).map((v) => (
+              <button
+                disabled={1 === page}
+                className={`border-r-2 px-2 text-neutral-500 ${
+                  1 === page && "bg-purple-100 text-purple-700"
+                }`}
+                onClick={() => setPage(1)}
+              >
+                1
+              </button>
+              {range(page + 1, page + 2).map((v) => (
                 <button
                   key={v}
                   disabled={v === page}
-                  className="border-r-2 px-2 text-neutral-500"
+                  className={`border-r-2 px-2 text-neutral-500 ${
+                    v === page && "bg-purple-100 text-purple-700"
+                  }`}
                   onClick={() => setPage(v)}
                 >
                   {v}
