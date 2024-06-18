@@ -35,7 +35,36 @@ export async function scrapeData(url: string) {
 
     const company = $("title").text();
     const description = $('meta[name="description"]').attr("content");
-    let image = $('link[rel="icon"]').attr("href");
+
+    const faviconSelectors = [
+      'link[rel="icon"]',
+      'link[rel="shortcut icon"]',
+      'link[rel="apple-touch-icon"]',
+      'link[rel="apple-touch-icon-precomposed"]',
+      'link[rel="mask-icon"]',
+    ];
+
+    let image;
+
+    // $('link[rel="icon"]').attr("href");
+    for (const selector of faviconSelectors) {
+      const favicon = $(selector).attr("href");
+      if (favicon) {
+        image = favicon;
+        break;
+      }
+    }
+
+    if (image) {
+      // Ensure the URL is absolute
+      if (!image.startsWith("http")) {
+        const urlObj = new URL(url);
+        image = new URL(image, urlObj.origin).href;
+      }
+      console.log("Favicon URL:", image);
+    } else {
+      console.log("Favicon not found.");
+    }
 
     if (!image?.startsWith("https:/")) {
       image = "https://" + website + "/" + image;
